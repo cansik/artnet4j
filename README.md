@@ -3,7 +3,19 @@ Art-Net DMX over IP library for Java
 
 ## Features
 
+* Bind server to a custom network interface
 * Reuse of the socket address
+
+## Examples
+### Bind Custom Network Interface
+This is just a short example to show how to bind a custom network interface `en5` to the artnet server:
+
+```java
+NetworkInterface ni = NetworkInterface.getByName("en5");
+InetAddress address = ni.getInetAddresses().nextElement();
+
+artnet.start(address);
+```
 
 ## Code
 Check out the [processing](https://processing.org/) example:

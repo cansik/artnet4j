@@ -20,14 +20,15 @@ public class ArtNetClient {
 
   public void open()
   {
-    open(null);
+    open(null, null);
   }
 
-  public void open(String address)
+  public void open(InetAddress in, String address)
   {
     try
     {
-      artnet.start();
+      // sender
+      artnet.start(in);
       setReceiver(address);
     } 
     catch (SocketException e) {

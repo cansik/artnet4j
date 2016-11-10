@@ -19,17 +19,17 @@
 
 package artnet4j;
 
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import artnet4j.events.ArtNetServerEventAdapter;
 import artnet4j.events.ArtNetServerListener;
 import artnet4j.packets.ArtNetPacket;
 import artnet4j.packets.ArtPollReplyPacket;
 import artnet4j.packets.PacketType;
+
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ArtNet {
 
@@ -38,7 +38,7 @@ public class ArtNet {
 
     protected static final long ARTPOLL_REPLY_TIMEOUT = 3000;
 
-    protected static final String VERSION = "0001-20091119";
+    protected static final String VERSION = "0.2.0";
 
     protected ArtNetServer server;
     protected ArtNetNodeDiscovery discovery;
@@ -95,11 +95,28 @@ public class ArtNet {
         server.setBroadcastAddress(ip);
     }
 
+    /**
+     * Starts the Artnet client.
+     *
+     * @throws SocketException
+     * @throws ArtNetException
+     */
     public void start() throws SocketException, ArtNetException {
+        start(null);
+    }
+
+    /**
+     * Starts the Artnet client.
+     *
+     * @param networkAddress Network address to bind to
+     * @throws SocketException
+     * @throws ArtNetException
+     */
+    public void start(InetAddress networkAddress) throws SocketException, ArtNetException {
         if (server == null) {
             init();
         }
-        server.start();
+        server.start(networkAddress);
     }
 
     public void startNodeDiscovery() throws ArtNetException {
@@ -117,7 +134,7 @@ public class ArtNet {
 
     /**
      * Sends the given packet to the specified Art-Net node.
-     * 
+     *
      * @param packet
      * @param node
      */
@@ -127,7 +144,7 @@ public class ArtNet {
 
     /**
      * Sends the given packet to the specified IP address.
-     * 
+     *
      * @param packet
      * @param adr
      */
@@ -137,7 +154,7 @@ public class ArtNet {
 
     /**
      * Sends the given packet to the specified IP address.
-     * 
+     *
      * @param packet
      * @param adr
      */
