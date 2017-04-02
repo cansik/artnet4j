@@ -7,7 +7,7 @@ Art-Net DMX over IP library for Java
 * Reuse of the socket address
 
 ## Examples
-### Bind Custom Network Interface
+### Bind Custom Network Interface
 This is just a short example to show how to bind a custom network interface `en5` to the artnet server:
 
 ```java
