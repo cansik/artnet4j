@@ -5,7 +5,6 @@ import ch.bildspur.artnet.packets.ArtDmxPacket;
 import ch.bildspur.artnet.packets.ArtNetPacket;
 
 import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
@@ -34,18 +33,16 @@ public class ArtNetClient {
         this.start((InetAddress)null);
     }
 
-    public void start(String interfaceName)
+    public void start(String networkInterfaceAddress)
     {
         try {
-            NetworkInterface ni = NetworkInterface.getByName(interfaceName);
-            InetAddress address = ni.getInetAddresses().nextElement();
-            start(address);
-        } catch (SocketException e) {
+            this.start(InetAddress.getByName(networkInterfaceAddress));
+        } catch (UnknownHostException e) {
             e.printStackTrace();
         }
     }
 
-    public void start(InetAddress networkInterface) {
+    public void start(InetAddress networkInterfaceAddress) {
         if (isRunning)
             return;
 
@@ -62,7 +59,7 @@ public class ArtNetClient {
                         }
                     });
 
-            server.start(networkInterface);
+            server.start(networkInterfaceAddress);
 
             isRunning = true;
         } catch (SocketException | ArtNetException e) {
@@ -112,6 +109,8 @@ public class ArtNetClient {
     }
 
     private void onPacketReceived(final ArtNetPacket packet) {
+        System.out.print("received: " + packet.toString());
+
         // only store input data if buffer is created
         if (inputBuffer == null)
             return;

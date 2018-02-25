@@ -27,7 +27,7 @@ public class ReceiveArtNetSketch extends PApplet {
     @Override
     public void setup()
     {
-        artnet.start();
+        artnet.start("127.0.0.1");
     }
 
     @Override

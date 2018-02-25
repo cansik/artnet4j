@@ -46,7 +46,7 @@ public abstract class ArtNetPacket {
 
     /**
      * Returns the actually used length of the data buffer.
-     * 
+     *
      * @return
      */
     public int getLength() {
@@ -55,7 +55,7 @@ public abstract class ArtNetPacket {
 
     /**
      * Returns the type of this packet.
-     * 
+     *
      * @return the type
      */
     public PacketType getType() {
@@ -67,7 +67,7 @@ public abstract class ArtNetPacket {
      * specific fields for each packet type. Implementing classes do not need to
      * check the packet header anymore since this has already been done at this
      * stage.
-     * 
+     *
      * @param raw
      * @return true, if there were no parse errors
      */
