@@ -20,6 +20,7 @@
 package ch.bildspur.artnet;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.logging.Logger;
 
 import ch.bildspur.artnet.packets.ArtPollReplyPacket;
@@ -51,6 +52,16 @@ public class ArtNetNode {
 
 	public ArtNetNode() {
 		this(NodeStyle.ST_NODE);
+	}
+
+	public ArtNetNode(String address) {
+		this();
+
+		try {
+			setIPAddress(InetAddress.getByName(address));
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public ArtNetNode(NodeStyle style) {

@@ -1,17 +1,20 @@
-package ch.bildspur.artnet;
+package ch.bildspur.artnet.processing;
 
+import ch.bildspur.artnet.ArtNet;
+import ch.bildspur.artnet.ArtNetException;
+import ch.bildspur.artnet.ArtNetNode;
 import ch.bildspur.artnet.packets.ArtDmxPacket;
 
 import java.net.InetAddress;
 import java.net.SocketException;
 
-public class ArtNetClient {
+public class ArtNetSender {
 
     private int sequenceId;
     private ArtNet artnet;
     private ArtNetNode receiver;
 
-    public ArtNetClient()
+    public ArtNetSender()
     {
         artnet = new ArtNet();
     }
