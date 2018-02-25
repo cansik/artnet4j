@@ -98,8 +98,8 @@ public class ArtNet {
     /**
      * Starts the Artnet client.
      *
-     * @throws SocketException
-     * @throws ArtNetException
+     * @throws SocketException Socket Exception.
+     * @throws ArtNetException ArtNet Exception.
      */
     public void start() throws SocketException, ArtNetException {
         start(null);
@@ -109,8 +109,8 @@ public class ArtNet {
      * Starts the Artnet client.
      *
      * @param networkAddress Network address to bind to
-     * @throws SocketException
-     * @throws ArtNetException
+     * @throws SocketException Socket Exception.
+     * @throws ArtNetException ArtNet Exception.
      */
     public void start(InetAddress networkAddress) throws SocketException, ArtNetException {
         if (server == null) {
@@ -135,8 +135,8 @@ public class ArtNet {
     /**
      * Sends the given packet to the specified Art-Net node.
      *
-     * @param packet
-     * @param node
+     * @param packet Packet to send.
+     * @param node Node to send to.
      */
     public void unicastPacket(ArtNetPacket packet, ArtNetNode node) {
         server.unicastPacket(packet, node.getIPAddress());
@@ -145,8 +145,8 @@ public class ArtNet {
     /**
      * Sends the given packet to the specified IP address.
      *
-     * @param packet
-     * @param adr
+     * @param packet Packet to send.
+     * @param adr Node to send to.
      */
     public void unicastPacket(ArtNetPacket packet, InetAddress adr) {
         server.unicastPacket(packet, adr);
@@ -155,8 +155,8 @@ public class ArtNet {
     /**
      * Sends the given packet to the specified IP address.
      *
-     * @param packet
-     * @param adr
+     * @param packet Packet to send.
+     * @param adr Node to send to.
      */
     public void unicastPacket(ArtNetPacket packet, String adr) {
         InetAddress targetAdress;

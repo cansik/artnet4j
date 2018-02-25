@@ -172,8 +172,8 @@ public class ArtNetServer extends ArtNetNode implements Runnable {
     /**
      * Sends the given packet to the specified IP address.
      *
-     * @param ap
-     * @param targetAdress
+     * @param ap Packet to send.
+     * @param targetAdress Target address.
      */
     public void unicastPacket(ArtNetPacket ap, InetAddress targetAdress) {
         try {

@@ -24,8 +24,8 @@ public class ByteUtils {
     /**
      * Converts the byte into an unsigned int.
      * 
-     * @param b
-     * @return
+     * @param b Byte to convert.
+     * @return Unsigned integer.
      */
     public static final int byteToUint(byte b) {
         return (b < 0 ? 256 + b : b);
@@ -76,8 +76,8 @@ public class ByteUtils {
      * Gets a 16bit int (Big Endian, MSB first) from the buffer at the given
      * offset.
      * 
-     * @param offset
-     * @return
+     * @param offset Data offset.
+     * @return Int16 BE.
      */
     public final int getInt16(int offset) {
         return (byteToUint(data[offset]) << 8) | byteToUint(data[offset + 1]);
@@ -87,8 +87,8 @@ public class ByteUtils {
      * Gets a 16bit int (Little Endian, LSB first) from the buffer at the given
      * offset.
      * 
-     * @param offset
-     * @return
+     * @param offset Data offset.
+     * @return Int16 LE.
      */
     public final int getInt16LE(int offset) {
         return (byteToUint(data[offset + 1]) << 8) | byteToUint(data[offset]);
@@ -97,8 +97,8 @@ public class ByteUtils {
     /**
      * Gets an 8bit int from the buffer at the given offset.
      * 
-     * @param offset
-     * @return
+     * @param offset Data offset.
+     * @return Int8.
      */
     public final int getInt8(int offset) {
         return byteToUint(data[offset]);
