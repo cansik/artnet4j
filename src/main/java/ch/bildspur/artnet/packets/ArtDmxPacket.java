@@ -25,8 +25,6 @@ public class ArtDmxPacket extends ArtNetPacket {
     /**
      * @return the actual packet size used. If an odd number DMX channels is
      *         used, the packet size is made even automatically.
-     *
-     * @see artnet4j.packets.ArtNetPacket#getLength()
      */
     @Override
     public int getLength() {

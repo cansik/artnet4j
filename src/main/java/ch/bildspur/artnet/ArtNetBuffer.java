@@ -2,7 +2,6 @@ package ch.bildspur.artnet;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class ArtNetBuffer {
     private static final int DEFAULT_CHANNEL_SIZE = 512;
