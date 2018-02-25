@@ -109,8 +109,6 @@ public class ArtNetClient {
     }
 
     private void onPacketReceived(final ArtNetPacket packet) {
-        System.out.print("received: " + packet.toString());
-
         // only store input data if buffer is created
         if (inputBuffer == null)
             return;
@@ -122,9 +120,7 @@ public class ArtNetClient {
         int subnet = dmxPacket.getSubnetID();
         int universe = dmxPacket.getUniverseID();
 
-        inputBuffer.setDmxData((short) subnet, (short) universe, dmxPacket.getData());
-
-        System.out.println("Data Received: S: " + subnet + " U: " + universe);
+        inputBuffer.setDmxData((short) subnet, (short) universe, dmxPacket.getDmxData());
     }
 
     public byte[] readDmxData(int subnet, int universe) {

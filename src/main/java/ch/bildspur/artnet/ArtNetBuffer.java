@@ -2,6 +2,7 @@ package ch.bildspur.artnet;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ArtNetBuffer {
     private static final int DEFAULT_CHANNEL_SIZE = 512;
@@ -17,7 +18,7 @@ public class ArtNetBuffer {
     public ArtNetBuffer(int channelSize)
     {
         this.channelSize = channelSize;
-        data = new HashMap<>();
+        data = new ConcurrentHashMap<>();
     }
 
     public byte[] getDmxData(short subnet, short universe){
@@ -29,7 +30,7 @@ public class ArtNetBuffer {
         return data.get(key);
     }
 
-    public void setDmxData(short subnet, short universe, byte[] dmxData)
+    public void setDmxData(short subnet, short universe, final byte[] dmxData)
     {
         data.put(hashKeyFromPair(subnet, universe), dmxData);
     }
