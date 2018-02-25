@@ -17,7 +17,7 @@
  * along with artnet4j. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package artnet4j.packets;
+package ch.bildspur.artnet.packets;
 
 import java.util.logging.Logger;
 

@@ -17,9 +17,9 @@
  * along with artnet4j. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package artnet4j;
+package ch.bildspur.artnet;
 
-import artnet4j.packets.ArtDmxPacket;
+import ch.bildspur.artnet.packets.ArtDmxPacket;
 
 public class DmxUniverse {
 

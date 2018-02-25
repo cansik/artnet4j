@@ -17,13 +17,13 @@
  * along with artnet4j. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package artnet4j;
+package ch.bildspur.artnet;
 
-import artnet4j.events.ArtNetServerListener;
-import artnet4j.packets.ArtNetPacket;
-import artnet4j.packets.ArtNetPacketParser;
-import artnet4j.packets.ArtPollPacket;
-import artnet4j.packets.PacketType;
+import ch.bildspur.artnet.events.ArtNetServerListener;
+import ch.bildspur.artnet.packets.ArtNetPacket;
+import ch.bildspur.artnet.packets.ArtNetPacketParser;
+import ch.bildspur.artnet.packets.ArtPollPacket;
+import ch.bildspur.artnet.packets.PacketType;
 
 import java.io.IOException;
 import java.net.*;

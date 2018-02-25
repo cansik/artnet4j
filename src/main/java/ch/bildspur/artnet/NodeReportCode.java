@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with artnet4j. If not, see <http://www.gnu.org/licenses/>.
  */
-package artnet4j;
+package ch.bildspur.artnet;
 
 public enum NodeReportCode {
 

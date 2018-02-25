@@ -17,13 +17,13 @@
  * along with artnet4j. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package artnet4j;
+package ch.bildspur.artnet;
 
 import java.net.InetAddress;
 import java.util.logging.Logger;
 
-import artnet4j.packets.ArtPollReplyPacket;
-import artnet4j.packets.ByteUtils;
+import ch.bildspur.artnet.packets.ArtPollReplyPacket;
+import ch.bildspur.artnet.packets.ByteUtils;
 
 public class ArtNetNode {
 

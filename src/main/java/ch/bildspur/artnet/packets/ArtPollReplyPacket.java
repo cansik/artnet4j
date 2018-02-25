@@ -17,15 +17,15 @@
  * along with artnet4j. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package artnet4j.packets;
+package ch.bildspur.artnet.packets;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 
-import artnet4j.NodeReportCode;
-import artnet4j.NodeStyle;
-import artnet4j.PortDescriptor;
+import ch.bildspur.artnet.NodeReportCode;
+import ch.bildspur.artnet.NodeStyle;
+import ch.bildspur.artnet.PortDescriptor;
 
 public class ArtPollReplyPacket extends ArtNetPacket {
 

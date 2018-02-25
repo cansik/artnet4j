@@ -17,17 +17,19 @@
  * along with artnet4j. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package artnet4j;
+package ch.bildspur.artnet.events;
 
-public class ArtNetException extends Exception {
+import java.util.List;
 
-	private static final long serialVersionUID = 1L;
+import ch.bildspur.artnet.ArtNetNode;
 
-	public ArtNetException(String message) {
-		super(message);
-	}
+public interface ArtNetDiscoveryListener {
 
-	public ArtNetException(String message, Throwable cause) {
-		super(message, cause);
-	}
+	void discoveredNewNode(ArtNetNode node);
+
+	void discoveredNodeDisconnected(ArtNetNode node);
+
+	void discoveryCompleted(List<ArtNetNode> nodes);
+
+	void discoveryFailed(Throwable t);
 }

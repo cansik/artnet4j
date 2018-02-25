@@ -16,20 +16,18 @@
  * You should have received a copy of the GNU General Public License
  * along with artnet4j. If not, see <http://www.gnu.org/licenses/>.
  */
+package ch.bildspur.artnet;
 
-package artnet4j.events;
+public enum PortType {
+    DMX512(0), MIDI(1), AVAB(2), COLORTRAN(3), ADB62_5(4), ARTNET(5);
 
-import java.util.List;
+    private int id;
 
-import artnet4j.ArtNetNode;
+    private PortType(int id) {
+        this.id = id;
+    }
 
-public interface ArtNetDiscoveryListener {
-
-	void discoveredNewNode(ArtNetNode node);
-
-	void discoveredNodeDisconnected(ArtNetNode node);
-
-	void discoveryCompleted(List<ArtNetNode> nodes);
-
-	void discoveryFailed(Throwable t);
+    public int getPortID() {
+        return id;
+    }
 }

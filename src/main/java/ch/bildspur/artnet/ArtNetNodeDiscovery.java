@@ -17,7 +17,7 @@
  * along with artnet4j. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package artnet4j;
+package ch.bildspur.artnet;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -25,9 +25,9 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
-import artnet4j.events.ArtNetDiscoveryListener;
-import artnet4j.packets.ArtPollPacket;
-import artnet4j.packets.ArtPollReplyPacket;
+import ch.bildspur.artnet.events.ArtNetDiscoveryListener;
+import ch.bildspur.artnet.packets.ArtPollPacket;
+import ch.bildspur.artnet.packets.ArtPollReplyPacket;
 
 public class ArtNetNodeDiscovery implements Runnable {
 

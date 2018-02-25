@@ -17,7 +17,7 @@
  * along with artnet4j. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package artnet4j;
+package ch.bildspur.artnet;
 
 public enum NodeStyle {
     ST_NODE(0, ArtNetNode.class), ST_SERVER(1, ArtNetServer.class), ST_MEDIA(2,

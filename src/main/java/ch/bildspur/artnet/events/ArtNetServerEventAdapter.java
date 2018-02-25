@@ -17,7 +17,7 @@
  * along with artnet4j. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package artnet4j.events;
+package ch.bildspur.artnet.events;
 
 /*
  * This file is part of artnet4j.
@@ -38,8 +38,8 @@ package artnet4j.events;
  * along with artnet4j. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import artnet4j.ArtNetServer;
-import artnet4j.packets.ArtNetPacket;
+import ch.bildspur.artnet.ArtNetServer;
+import ch.bildspur.artnet.packets.ArtNetPacket;
 
 public class ArtNetServerEventAdapter implements ArtNetServerListener {
 

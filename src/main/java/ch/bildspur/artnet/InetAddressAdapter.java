@@ -17,31 +17,22 @@
  * along with artnet4j. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package artnet4j.events;
+package ch.bildspur.artnet;
 
-import java.util.List;
+import java.net.InetAddress;
 
-import artnet4j.ArtNetNode;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-public class ArtNetDiscoveryEventAdapter implements ArtNetDiscoveryListener {
+public class InetAddressAdapter extends XmlAdapter<String, InetAddress> {
 
-    @Override
-    public void discoveredNewNode(ArtNetNode node) {
+	@Override
+	public String marshal(InetAddress adr) throws Exception {
+		return adr.getHostAddress();
+	}
 
-    }
+	@Override
+	public InetAddress unmarshal(String adr) throws Exception {
+		return InetAddress.getByName(adr);
+	}
 
-    @Override
-    public void discoveredNodeDisconnected(ArtNetNode node) {
-
-    }
-
-    @Override
-    public void discoveryCompleted(List<ArtNetNode> nodes) {
-
-    }
-
-    @Override
-    public void discoveryFailed(Throwable t) {
-
-    }
 }
