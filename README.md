@@ -1,6 +1,6 @@
 # ArtNet for Java & Processing [![Build Status](https://travis-ci.org/cansik/artnet4j.svg?branch=master)](https://travis-ci.org/cansik/artnet4j) [![Build status](https://ci.appveyor.com/api/projects/status/811y7bud6srbdbny?svg=true)](https://ci.appveyor.com/project/cansik/artnet4j)
 
-Art-Net DMX over IP library for Java and Processing
+Art-Net DMX over IP library for Java and Processing. This library adds a lot of features to the existing artnet4j project. Including support to read dmx data.
 
 ## Features
 
@@ -9,8 +9,43 @@ Art-Net DMX over IP library for Java and Processing
 * Added ability to receive `OpDmx` packages
 
 ## Examples
+The library adds a new class called `ArtNetClient`, which contains easy access to the underlaying Art-Net implementation.
+
+### Send Dmx Data
+To send dmx data you have to create a new client. It is possible to skip the buffer creation, because receiving is not needed here.
+
+```java
+byte[] dmxData = new byte[512];
+ArtNetClient artnet = new ArtNetClient(null);
+artnet.start();
+
+// set data
+dmxData[0] = 128;
+
+// send data to localhost
+artnet.unicastDmx("127.0.0.1", 0, 0, dmxData);
+artnet.stop();
+```
+*Based on [SendDmxData](examples/SendDmxData/SendDmxData.pde)*
+
+### Read Dmx Data
+Reading data is simple as creating a new client, and read the bytes from the buffer. Please be aware that you have to mask the bytes with `0xFF` (because they are signed).
+
+```java
+ArtNetClient artnet = new ArtNetClient();
+  
+// set interface address to listen to
+artnet.start("127.0.0.1");
+
+byte[] data = artnet.readDmxData(0, 0);
+System.out.println("First Byte: " + data[0] & 0xFF);
+artnet.start.stop();
+```
+
+*Based on [ReceiveDmxData](examples/ReceiveDmxData/ReceiveDmxData.pde)*
+
 ### Bind Custom Network Interface
-This is just a short example to show how to bind a custom network interface `en5` to the artnet server:
+It is also possible to set a custom network interface. Here you see how to bind a custom network interface `en5` to the ArtNet server:
 
 ```java
 NetworkInterface ni = NetworkInterface.getByName("en5");
@@ -19,12 +54,9 @@ InetAddress address = ni.getInetAddresses().nextElement();
 artnet.start(address);
 ```
 
-## Code
-Check out the [processing](https://processing.org/) example:
-
-* [examples/ArtNetTest](examples/ArtNetTest)
-
 ## About
+The library is based on then [artnet4j](https://code.google.com/archive/p/artnet4j/) project.
+
 Art-Net by Artistic Licence allows for broadcasting DMX data via IP/UDP. This library is implementing the basic protocol for Java applications.
 
 Currently supported core features are:
@@ -38,6 +70,4 @@ Currently supported core features are:
 
 This project is currently still in pre-alpha stage, so currently only source access via hg. Be also aware that large parts of the codebase are still undergoing major changes.
 
-Forked from [artnet4j](https://code.google.com/archive/p/artnet4j/).
-
-New features are developed by Florian.
+New features are developed by [Florian](https://github.com/cansik).
