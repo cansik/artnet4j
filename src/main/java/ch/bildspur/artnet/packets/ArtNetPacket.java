@@ -47,7 +47,7 @@ public abstract class ArtNetPacket {
     /**
      * Returns the actually used length of the data buffer.
      *
-     * @return
+     * @return Length of the data buffer.
      */
     public int getLength() {
         return data.length;
