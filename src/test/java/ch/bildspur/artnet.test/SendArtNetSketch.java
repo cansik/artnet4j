@@ -1,6 +1,7 @@
 package ch.bildspur.artnet.test;
 
-import ch.bildspur.artnet.processing.ArtNetSender;
+import ch.bildspur.artnet.ArtNetClient;
+import ch.bildspur.artnet.ArtNetNode;
 import processing.core.PApplet;
 
 
@@ -15,7 +16,8 @@ public class SendArtNetSketch extends PApplet {
         runSketch();
     }
 
-    ArtNetSender artnet = new ArtNetSender();
+    ArtNetClient artnet = new ArtNetClient();
+    ArtNetNode localhostNode = new ArtNetNode("127.0.0.1");
     byte[] dmxData = new byte[512];
 
     @Override
@@ -29,8 +31,7 @@ public class SendArtNetSketch extends PApplet {
     {
         colorMode(HSB, 360, 100, 100);
 
-        artnet.open();
-        artnet.setReceiver("127.0.0.1");
+        artnet.start();
     }
 
     @Override
@@ -41,12 +42,12 @@ public class SendArtNetSketch extends PApplet {
         setRGB(0, c);
 
         // send dmx
-        artnet.send(0, dmxData);
+        artnet.unicastDmx(localhostNode, 0, 0, dmxData);
     }
 
     @Override
     public void stop() {
-        artnet.close();
+        artnet.stop();
     }
 
     void setRGB(int address, int color)
