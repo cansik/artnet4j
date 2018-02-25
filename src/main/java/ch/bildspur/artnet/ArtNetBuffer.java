@@ -18,7 +18,7 @@ public class ArtNetBuffer {
     public ArtNetBuffer(int channelSize)
     {
         this.channelSize = channelSize;
-        data = new ConcurrentHashMap<>();
+        data = new HashMap<>();
     }
 
     public byte[] getDmxData(short subnet, short universe){
