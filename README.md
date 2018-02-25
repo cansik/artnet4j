@@ -1,4 +1,4 @@
-# artnet4j [![Build Status](https://travis-ci.org/cansik/artnet4j.svg?branch=master)](https://travis-ci.org/cansik/artnet4j) [![Build status](https://ci.appveyor.com/api/projects/status/811y7bud6srbdbny?svg=true)](https://ci.appveyor.com/project/cansik/artnet4j)
+# ArtNet for Java & Processing [![Build Status](https://travis-ci.org/cansik/artnet4j.svg?branch=master)](https://travis-ci.org/cansik/artnet4j) [![Build status](https://ci.appveyor.com/api/projects/status/811y7bud6srbdbny?svg=true)](https://ci.appveyor.com/project/cansik/artnet4j)
 
 Art-Net DMX over IP library for Java and Processing
 
