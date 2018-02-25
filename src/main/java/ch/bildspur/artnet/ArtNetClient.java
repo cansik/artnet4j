@@ -16,7 +16,15 @@ public class ArtNetClient {
     private int sequenceId = 0;
     private boolean isRunning = false;
 
+    private ArtNetBuffer inputBuffer;
+
     public ArtNetClient() {
+        this(new ArtNetBuffer());
+    }
+
+    public ArtNetClient(ArtNetBuffer inputBuffer) {
+        // init input buffer
+        this.inputBuffer = inputBuffer;
         server = new ArtNetServer();
     }
 
@@ -28,6 +36,10 @@ public class ArtNetClient {
     public void start(InetAddress networkInterface) {
         if (isRunning)
             return;
+
+        // reset buffer if present
+        if (inputBuffer != null)
+            inputBuffer.clear();
 
         try {
             server.addListener(
@@ -89,6 +101,10 @@ public class ArtNetClient {
     }
 
     private void onPacketReceived(final ArtNetPacket packet) {
+        // only store input data if buffer is created
+        if (inputBuffer == null)
+            return;
+
         if (packet.getType() != ART_OUTPUT)
             return;
 
@@ -96,8 +112,17 @@ public class ArtNetClient {
         int subnet = dmxPacket.getSubnetID();
         int universe = dmxPacket.getUniverseID();
 
-        // todo: copy data to buffer
-        System.out.println("data received");
+        inputBuffer.setDmxData((short) subnet, (short) universe, dmxPacket.getData());
+
+        System.out.println("Data Received: S: " + subnet + " U: " + universe);
+    }
+
+    public byte[] readDmxData(int subnet, int universe) {
+        return readDmxData((short) subnet, (short) universe);
+    }
+
+    public byte[] readDmxData(short subnet, short universe) {
+        return inputBuffer.getDmxData(subnet, universe);
     }
 
     public ArtNetServer getArtNetServer() {
@@ -106,5 +131,13 @@ public class ArtNetClient {
 
     public boolean isRunning() {
         return isRunning;
+    }
+
+    public ArtNetBuffer getInputBuffer() {
+        return inputBuffer;
+    }
+
+    public void setInputBuffer(ArtNetBuffer inputBuffer) {
+        this.inputBuffer = inputBuffer;
     }
 }

@@ -16,7 +16,7 @@ public class SendArtNetSketch extends PApplet {
         runSketch();
     }
 
-    ArtNetClient artnet = new ArtNetClient();
+    ArtNetClient artnet = new ArtNetClient(null);
     ArtNetNode localhostNode = new ArtNetNode("127.0.0.1");
     byte[] dmxData = new byte[512];
 
