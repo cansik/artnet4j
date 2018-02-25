@@ -18,21 +18,35 @@ public class ArtNetClient {
 
     private ArtNetBuffer inputBuffer;
 
+    /**
+     * Creates a new ArtNetClient.
+     */
     public ArtNetClient() {
         this(new ArtNetBuffer());
     }
 
+    /**
+     * Creates a new ArtNetClient.
+     * @param inputBuffer Input buffer implementation. If null, no data is received.
+     */
     public ArtNetClient(ArtNetBuffer inputBuffer) {
         // init input buffer
         this.inputBuffer = inputBuffer;
         server = new ArtNetServer();
     }
 
+    /**
+     * Start client with default arguments (listen on broadcast).
+     */
     public void start() {
         // use default network interface
         this.start((InetAddress)null);
     }
 
+    /**
+     * Start client with specific network interface address.
+     * @param networkInterfaceAddress Network interface address to listen to.
+     */
     public void start(String networkInterfaceAddress)
     {
         try {
@@ -42,6 +56,10 @@ public class ArtNetClient {
         }
     }
 
+    /**
+     * Start client with specific network interface address.
+     * @param networkInterfaceAddress Network interface address to listen to.
+     */
     public void start(InetAddress networkInterfaceAddress) {
         if (isRunning)
             return;
@@ -67,6 +85,9 @@ public class ArtNetClient {
         }
     }
 
+    /**
+     * Stops the client and udp server.
+     */
     public void stop() {
         if (!isRunning)
             return;
@@ -76,10 +97,23 @@ public class ArtNetClient {
         isRunning = false;
     }
 
+    /**
+     * Send a dmx package as broadcast package.
+     * @param subnet Receiving subnet.
+     * @param universe Receiving universe.
+     * @param dmxData Dmx data to send.
+     */
     public void broadcastDmx(int subnet, int universe, byte[] dmxData) {
         server.broadcastPacket(createDmxPacket(subnet, universe, dmxData));
     }
 
+    /**
+     * Send a dmx package to a specific unicast address.
+     * @param address Receiver address.
+     * @param subnet Receiving subnet.
+     * @param universe Receiving universe.
+     * @param dmxData Dmx data to send.
+     */
     public void unicastDmx(String address, int subnet, int universe, byte[] dmxData) {
         try {
             this.unicastDmx(InetAddress.getByName(address), subnet, universe, dmxData);
@@ -88,10 +122,24 @@ public class ArtNetClient {
         }
     }
 
+    /**
+     * Send a dmx package to a specific unicast address.
+     * @param node Receiver node.
+     * @param subnet Receiving subnet.
+     * @param universe Receiving universe.
+     * @param dmxData Dmx data to send.
+     */
     public void unicastDmx(ArtNetNode node, int subnet, int universe, byte[] dmxData) {
         server.unicastPacket(createDmxPacket(subnet, universe, dmxData), node.getIPAddress());
     }
 
+    /**
+     * Send a dmx package to a specific unicast address.
+     * @param address Receiver address.
+     * @param subnet Receiving subnet.
+     * @param universe Receiving universe.
+     * @param dmxData Dmx data to send.
+     */
     public void unicastDmx(InetAddress address, int subnet, int universe, byte[] dmxData) {
         server.unicastPacket(createDmxPacket(subnet, universe, dmxData), address);
     }
@@ -123,10 +171,22 @@ public class ArtNetClient {
         inputBuffer.setDmxData((short) subnet, (short) universe, dmxPacket.getDmxData());
     }
 
+    /**
+     * Read dmx data from the buffer implementation.
+     * @param subnet Subnet to read from.
+     * @param universe Universe to read from.
+     * @return Dmx data array.
+     */
     public byte[] readDmxData(int subnet, int universe) {
         return readDmxData((short) subnet, (short) universe);
     }
 
+    /**
+     * Read dmx data from the buffer implementation.
+     * @param subnet Subnet to read from.
+     * @param universe Universe to read from.
+     * @return Dmx data array.
+     */
     public byte[] readDmxData(short subnet, short universe) {
         return inputBuffer.getDmxData(subnet, universe);
     }
