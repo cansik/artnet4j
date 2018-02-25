@@ -1,5 +1,5 @@
 # artnet4j
-Art-Net DMX over IP library for Java
+Art-Net DMX over IP library for Java and Processing
 
 ## Features
 
