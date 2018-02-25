@@ -57,7 +57,7 @@ public class ArtNetServer extends ArtNetNode implements Runnable {
         super(NodeStyle.ST_SERVER);
         this.port = port;
         this.sendPort = sendPort;
-        this.listeners = new ArrayList<ArtNetServerListener>();
+        this.listeners = new ArrayList<>();
         setBufferSize(2048);
     }
 
