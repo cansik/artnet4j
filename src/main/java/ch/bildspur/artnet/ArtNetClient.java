@@ -1,26 +1,26 @@
 package ch.bildspur.artnet;
 
-import ch.bildspur.artnet.events.ArtNetServerListener;
+import ch.bildspur.artnet.events.ArtNetServerEventAdapter;
 import ch.bildspur.artnet.packets.ArtDmxPacket;
 import ch.bildspur.artnet.packets.ArtNetPacket;
 
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 
 import static ch.bildspur.artnet.packets.PacketType.ART_OUTPUT;
 
 public class ArtNetClient {
-    private ArtNet artnet;
+    private ArtNetServer server;
 
     private int sequenceId = 0;
     private boolean isRunning = false;
 
     public ArtNetClient() {
-        artnet = new ArtNet();
+        server = new ArtNetServer();
     }
 
-    public void start()
-    {
+    public void start() {
         // use default network interface
         this.start(null);
     }
@@ -30,32 +30,16 @@ public class ArtNetClient {
             return;
 
         try {
-            artnet.init();
-            artnet.addServerListener(new ArtNetServerListener() {
-                @Override
-                public void artNetPacketReceived(final ArtNetPacket artNetPacket) {
-                    packetReceived(artNetPacket);
-                }
+            server.addListener(
+                    new ArtNetServerEventAdapter() {
+                        @Override
+                        public void artNetPacketReceived(ArtNetPacket packet) {
+                            onPacketReceived(packet);
+                        }
+                    });
 
-                @Override
-                public void artNetServerStopped(final ArtNetServer artNetServer) {
-                }
-
-                @Override
-                public void artNetServerStarted(final ArtNetServer artNetServer) {
-                }
-
-                @Override
-                public void artNetPacketUnicasted(final ArtNetPacket artNetPacket) {
-                }
-
-                @Override
-                public void artNetPacketBroadcasted(final ArtNetPacket artNetPacket) {
-                }
-            });
-
-            artnet.setBroadCastAddress(ArtNetServer.DEFAULT_BROADCAST_IP);
-            artnet.start(networkInterface);
+            server.setBroadcastAddress(ArtNetServer.DEFAULT_BROADCAST_IP);
+            server.start(networkInterface);
 
             isRunning = true;
         } catch (SocketException | ArtNetException e) {
@@ -67,23 +51,32 @@ public class ArtNetClient {
         if (!isRunning)
             return;
 
-        artnet.stop();
+        server.stop();
 
         isRunning = false;
     }
 
-    public void broadcastDmx(int subnet, int universe, byte[] dmxData)
-    {
-        artnet.broadcastPacket(createDmxPacket(subnet, universe, dmxData));
+    public void broadcastDmx(int subnet, int universe, byte[] dmxData) {
+        server.broadcastPacket(createDmxPacket(subnet, universe, dmxData));
     }
 
-    public void unicastDmx(ArtNetNode node, int subnet, int universe, byte[] dmxData)
-    {
-        artnet.unicastPacket(createDmxPacket(subnet, universe, dmxData), node);
+    public void unicastDmx(String address, int subnet, int universe, byte[] dmxData) {
+        try {
+            this.unicastDmx(InetAddress.getByName(address), subnet, universe, dmxData);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
     }
 
-    private ArtDmxPacket createDmxPacket(int subnet, int universe, byte[] dmxData)
-    {
+    public void unicastDmx(ArtNetNode node, int subnet, int universe, byte[] dmxData) {
+        server.unicastPacket(createDmxPacket(subnet, universe, dmxData), node.getIPAddress());
+    }
+
+    public void unicastDmx(InetAddress address, int subnet, int universe, byte[] dmxData) {
+        server.unicastPacket(createDmxPacket(subnet, universe, dmxData), address);
+    }
+
+    private ArtDmxPacket createDmxPacket(int subnet, int universe, byte[] dmxData) {
         ArtDmxPacket dmx = new ArtDmxPacket();
 
         dmx.setUniverse(subnet, universe);
@@ -95,7 +88,7 @@ public class ArtNetClient {
         return dmx;
     }
 
-    private void packetReceived(final ArtNetPacket packet) {
+    private void onPacketReceived(final ArtNetPacket packet) {
         if (packet.getType() != ART_OUTPUT)
             return;
 
@@ -107,8 +100,8 @@ public class ArtNetClient {
         System.out.println("data received");
     }
 
-    public ArtNet getArtnet() {
-        return artnet;
+    public ArtNetServer getArtNetServer() {
+        return server;
     }
 
     public boolean isRunning() {
