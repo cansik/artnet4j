@@ -50,7 +50,8 @@ public class ArtNetPacketParser {
         ArtNetPacket packet = null;
         ByteUtils data = new ByteUtils(raw);
         if (data.length > 10) {
-            if (data.compareBytes(ArtNetPacket.HEADER, 0, 8)) {
+            if (data.compareBytes(ArtNetPacket.HEADER, 0, 8) ||
+                    data.compareBytes(ArtNetPacket.ART_EXT_HEADER, 0, 8)) {
                 int opCode = data.getInt16LE(8);
                 packet = createPacketForOpCode(opCode, raw);
             } else {

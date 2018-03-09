@@ -36,6 +36,7 @@ public class ArtNetServer extends ArtNetNode implements Runnable {
     public static final int DEFAULT_PORT = 0x1936;
 
     public static final String DEFAULT_BROADCAST_IP = "255.255.255.255";
+    public static final String ART_POLL_ADDRESS = "2.255.255.255";
 
     protected final int port;
     protected final int sendPort;
