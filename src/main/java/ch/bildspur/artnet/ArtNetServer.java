@@ -20,10 +20,7 @@
 package ch.bildspur.artnet;
 
 import ch.bildspur.artnet.events.ArtNetServerListener;
-import ch.bildspur.artnet.packets.ArtNetPacket;
-import ch.bildspur.artnet.packets.ArtNetPacketParser;
-import ch.bildspur.artnet.packets.ArtPollPacket;
-import ch.bildspur.artnet.packets.PacketType;
+import ch.bildspur.artnet.packets.*;
 
 import java.io.IOException;
 import java.net.*;
@@ -120,6 +117,16 @@ public class ArtNetServer extends ArtNetNode implements Runnable {
     private void sendArtPollReply(InetAddress inetAddress, ArtPollPacket packet) {
         // TODO send reply with self description
         System.out.println("sending poll reply");
+
+        ArtPollReplyPacket reply = new ArtPollReplyPacket();
+
+        // set fields
+        reply.setIp(socket.getLocalAddress());
+        reply.setShortName("ArtNet4J Node");
+        reply.setLongName("ArtNet4J Node with long description");
+        reply.translateData();
+
+        broadcastPacket(reply);
     }
 
     public void setBroadcastAddress(String address) {

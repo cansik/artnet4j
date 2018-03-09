@@ -45,11 +45,11 @@ public class ArtPollReplyPacket extends ArtNetPacket {
     private int numPorts;
     private PortDescriptor[] ports = new PortDescriptor[numPorts];
 
-    private NodeStyle nodeStyle;
-    private NodeReportCode reportCode;
+    private NodeStyle nodeStyle = NodeStyle.ST_NODE;
+    private NodeReportCode reportCode = NodeReportCode.RcDefault;
 
-    private byte[] dmxIns = new byte[0];
-    private byte[] dmxOuts = new byte[0];
+    private byte[] dmxIns = new byte[4];
+    private byte[] dmxOuts = new byte[4];
 
     public ArtPollReplyPacket() {
         super(PacketType.ART_POLL_REPLY);
@@ -166,7 +166,7 @@ public class ArtPollReplyPacket extends ArtNetPacket {
         data.setInt16LE(PacketType.ART_POLL_REPLY.getOpCode(), 8);
 
         // ip address
-        data.setByteChunk(ip.getAddress(), 10, 4);
+        data.setByteChunk(ip.getAddress(), 10, ip.getAddress().length);
 
         // port
         data.setInt16LE(ArtNetServer.DEFAULT_PORT, 14);
@@ -197,9 +197,12 @@ public class ArtPollReplyPacket extends ArtNetPacket {
 
         // node report
         // id
-        data.setByteChunk(reportCode.getID().getBytes(), 108, 5);
+        byte[] reportCodeData = reportCode.getID().getBytes();
+        data.setByteChunk(reportCodeData, 108, reportCodeData.length);
+
         // description
-        data.setByteChunk(reportCode.getDescription().getBytes(), 113, Math.min(59, longName.getBytes().length));
+        byte[] reportDescriptionData = reportCode.getDescription().getBytes();
+        data.setByteChunk(reportDescriptionData, 113, Math.min(59, reportDescriptionData.length));
 
         // num ports
         data.setInt16(numPorts, 172);
@@ -210,10 +213,10 @@ public class ArtPollReplyPacket extends ArtNetPacket {
         }
 
         // dmx ins
-        data.setByteChunk(dmxIns, 186, 4);
+        data.setByteChunk(dmxIns, 186, dmxIns.length);
 
         // dmx outs
-        data.setByteChunk(dmxIns, 190, 4);
+        data.setByteChunk(dmxIns, 190, dmxIns.length);
 
         // style
         data.setInt8(nodeStyle.getStyleID(), 200);
@@ -250,5 +253,77 @@ public class ArtPollReplyPacket extends ArtNetPacket {
      */
     public void setReportCode(NodeReportCode reportCode) {
         this.reportCode = reportCode;
+    }
+
+    public InetAddress getIp() {
+        return ip;
+    }
+
+    public void setIp(InetAddress ip) {
+        this.ip = ip;
+    }
+
+    public int getVersionInfo() {
+        return versionInfo;
+    }
+
+    public void setVersionInfo(int versionInfo) {
+        this.versionInfo = versionInfo;
+    }
+
+    public void setSubSwitch(int subSwitch) {
+        this.subSwitch = subSwitch;
+    }
+
+    public int getOemCode() {
+        return oemCode;
+    }
+
+    public void setOemCode(int oemCode) {
+        this.oemCode = oemCode;
+    }
+
+    public void setNodeStatus(int nodeStatus) {
+        this.nodeStatus = nodeStatus;
+    }
+
+    public int getUbeaVersion() {
+        return ubeaVersion;
+    }
+
+    public void setUbeaVersion(int ubeaVersion) {
+        this.ubeaVersion = ubeaVersion;
+    }
+
+    public int getEstaManufacturerCode() {
+        return estaManufacturerCode;
+    }
+
+    public void setEstaManufacturerCode(int estaManufacturerCode) {
+        this.estaManufacturerCode = estaManufacturerCode;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+
+    public void setLongName(String longName) {
+        this.longName = longName;
+    }
+
+    public int getNumPorts() {
+        return numPorts;
+    }
+
+    public void setNumPorts(int numPorts) {
+        this.numPorts = numPorts;
+    }
+
+    public void setPorts(PortDescriptor[] ports) {
+        this.ports = ports;
+    }
+
+    public void setNodeStyle(NodeStyle nodeStyle) {
+        this.nodeStyle = nodeStyle;
     }
 }

@@ -19,7 +19,7 @@
 package ch.bildspur.artnet;
 
 public enum NodeReportCode {
-
+    RcDefault("#6666", "OK"),
     RcDebug("#0000", "Booted in debug mode"),
     RcPowerOk("#0001", "Power On Tests successful"),
     RcPowerFail("#0002", "Hardware tests failed at Power On"),
