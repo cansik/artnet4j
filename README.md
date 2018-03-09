@@ -24,18 +24,24 @@ dmxData[0] = 128;
 
 // send data to localhost
 artnet.unicastDmx("127.0.0.1", 0, 0, dmxData);
+
 artnet.stop();
 ```
 *Based on [SendDmxData](examples/SendDmxData/SendDmxData.pde)*
+
+It is also possible to send the data via broadcast.
+
+```java
+// to broad cast data
+artnet.broadcastDmx(0, 0, dmxData);
+```
 
 ### Read Dmx Data
 Reading data is simple as creating a new client, and read the bytes from the buffer. Please be aware that you have to mask the bytes with `0xFF` (because they are signed).
 
 ```java
 ArtNetClient artnet = new ArtNetClient();
-  
-// set interface address to listen to
-artnet.start("127.0.0.1");
+artnet.start();
 
 byte[] data = artnet.readDmxData(0, 0);
 System.out.println("First Byte: " + data[0] & 0xFF);

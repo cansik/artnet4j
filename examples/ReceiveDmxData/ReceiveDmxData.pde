@@ -11,9 +11,7 @@ void setup()
 
   // create artnet client
   artnet = new ArtNetClient();
-  
-  // set interface address to listen to
-  artnet.start("127.0.0.1");
+  artnet.start();
 }
 
 void draw()
