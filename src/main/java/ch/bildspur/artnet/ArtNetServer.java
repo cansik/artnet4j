@@ -119,6 +119,7 @@ public class ArtNetServer extends ArtNetNode implements Runnable {
 
     private void sendArtPollReply(InetAddress inetAddress, ArtPollPacket packet) {
         // TODO send reply with self description
+        System.out.println("sending poll reply");
     }
 
     public void setBroadcastAddress(String address) {

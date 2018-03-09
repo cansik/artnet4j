@@ -108,6 +108,10 @@ public class ByteUtils {
         return data.length;
     }
 
+    public final void setByteChunk(byte[] buffer, int offset) {
+        setByteChunk(buffer, offset, buffer.length);
+    }
+
     public final void setByteChunk(byte[] buffer, int offset, int len) {
         System.arraycopy(buffer, 0, data, offset, len);
     }

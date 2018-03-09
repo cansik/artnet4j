@@ -23,6 +23,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 
+import ch.bildspur.artnet.ArtNetServer;
 import ch.bildspur.artnet.NodeReportCode;
 import ch.bildspur.artnet.NodeStyle;
 import ch.bildspur.artnet.PortDescriptor;
@@ -31,21 +32,24 @@ public class ArtPollReplyPacket extends ArtNetPacket {
 
     private InetAddress ip;
 
+    private int versionInfo;
     private int subSwitch;
     private int oemCode;
     private int nodeStatus;
+    private int ubeaVersion;
+    private int estaManufacturerCode;
 
     private String shortName;
     private String longName;
 
     private int numPorts;
-    private PortDescriptor[] ports;
+    private PortDescriptor[] ports = new PortDescriptor[numPorts];
 
     private NodeStyle nodeStyle;
     private NodeReportCode reportCode;
 
-    private byte[] dmxIns;
-    private byte[] dmxOuts;
+    private byte[] dmxIns = new byte[0];
+    private byte[] dmxOuts = new byte[0];
 
     public ArtPollReplyPacket() {
         super(PacketType.ART_POLL_REPLY);
@@ -120,16 +124,17 @@ public class ArtPollReplyPacket extends ArtNetPacket {
     @Override
     public boolean parse(byte[] raw) {
         setData(raw);
-        // System.out.println(data.toHex(256));
+
         setIPAddress(data.getByteChunk(null, 10, 4));
+        versionInfo = data.getInt16(16);
         subSwitch = data.getInt16(18);
         oemCode = data.getInt16(20);
+        ubeaVersion = data.getInt8(22);
         nodeStatus = data.getInt8(23);
+        estaManufacturerCode = data.getInt16LE(24);
         shortName = new String(data.getByteChunk(null, 26, 17));
-        longName = new String(data.getByteChunk(null, 44, 64));
-        reportCode =
-                NodeReportCode.getForID(new String(data.getByteChunk(null, 108,
-                        5)));
+        longName = new String(data.getByteChunk(null, 44, 63));
+        reportCode = NodeReportCode.getForID(new String(data.getByteChunk(null, 108, 5)));
         numPorts = data.getInt16(172);
         ports = new PortDescriptor[numPorts];
         for (int i = 0; i < numPorts; i++) {
@@ -148,6 +153,70 @@ public class ArtPollReplyPacket extends ArtNetPacket {
             }
         }
         return true;
+    }
+
+    public void translateData()
+    {
+        data = new ByteUtils(new byte[256]);
+
+        // header
+        data.setByteChunk(HEADER, 0, HEADER.length);
+
+        // opcode
+        data.setInt16LE(PacketType.ART_POLL_REPLY.getOpCode(), 8);
+
+        // ip address
+        data.setByteChunk(ip.getAddress(), 10, 4);
+
+        // port
+        data.setInt16LE(ArtNetServer.DEFAULT_PORT, 14);
+
+        // versinfo
+        data.setInt16(versionInfo, 16);
+
+        // subSwitch
+        data.setInt16(subSwitch, 18);
+
+        // oem
+        data.setInt16(oemCode, 20);
+
+        // ubeaVersion
+        data.setInt8(ubeaVersion, 22);
+
+        // status1
+        data.setInt8(nodeStatus, 23);
+
+        // estaMan code
+        data.setInt16LE(estaManufacturerCode, 24);
+
+        // short name
+        data.setByteChunk(shortName.getBytes(), 26, Math.min(17, shortName.getBytes().length));
+
+        // long name
+        data.setByteChunk(longName.getBytes(), 44, Math.min(63, longName.getBytes().length));
+
+        // node report
+        // id
+        data.setByteChunk(reportCode.getID().getBytes(), 108, 5);
+        // description
+        data.setByteChunk(reportCode.getDescription().getBytes(), 113, Math.min(59, longName.getBytes().length));
+
+        // num ports
+        data.setInt16(numPorts, 172);
+
+        // ports
+        for (int i = 0; i < numPorts; i++) {
+            data.setInt8(ports[i].getData(), 174 + i);
+        }
+
+        // dmx ins
+        data.setByteChunk(dmxIns, 186, 4);
+
+        // dmx outs
+        data.setByteChunk(dmxIns, 190, 4);
+
+        // style
+        data.setInt8(nodeStyle.getStyleID(), 200);
     }
 
     /**

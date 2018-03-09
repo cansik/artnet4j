@@ -25,6 +25,10 @@ public class PortDescriptor {
     protected boolean canInput;
     protected PortType type;
 
+    public PortDescriptor()
+    {
+    }
+
     public PortDescriptor(int id) {
         canOutput = (id & 0x80) > 0;
         canInput = (id & 0x40) > 0;
@@ -57,9 +61,29 @@ public class PortDescriptor {
         return type;
     }
 
+    public int getData()
+    {
+        int data = type.getPortID();
+        data |= canInput ? 0x40 : 0;
+        data |= canOutput ? 0x80 : 0;
+        return data;
+    }
+
     @Override
     public String toString() {
         return "PortDescriptor: " + type + " out: " + canOutput + " in: "
                 + canInput;
+    }
+
+    public void setCanOutput(boolean canOutput) {
+        this.canOutput = canOutput;
+    }
+
+    public void setCanInput(boolean canInput) {
+        this.canInput = canInput;
+    }
+
+    public void setType(PortType type) {
+        this.type = type;
     }
 }
