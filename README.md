@@ -7,6 +7,7 @@ Art-Net DMX over IP library for Java and Processing. This library adds a lot of 
 * Bind server to a custom network interface
 * Reuse of the socket address
 * Added ability to receive `OpDmx` packages
+* Send and receive over broadcast.
 
 ## Examples
 The library adds a new class called `ArtNetClient`, which contains easy access to the underlaying Art-Net implementation.
