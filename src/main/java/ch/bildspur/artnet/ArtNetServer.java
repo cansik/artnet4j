@@ -47,6 +47,8 @@ public class ArtNetServer extends ArtNetNode implements Runnable {
 
     protected final List<ArtNetServerListener> listeners;
 
+    protected ArtPollReplyPacket defaultReplyPacket = null;
+
     public ArtNetServer() {
         this(DEFAULT_PORT, DEFAULT_PORT);
     }
@@ -115,18 +117,27 @@ public class ArtNetServer extends ArtNetNode implements Runnable {
     }
 
     private void sendArtPollReply(InetAddress inetAddress, ArtPollPacket packet) {
-        // TODO send reply with self description
-        System.out.println("sending poll reply");
-
+        /*
         ArtPollReplyPacket reply = new ArtPollReplyPacket();
 
         // set fields
         reply.setIp(socket.getLocalAddress());
+        reply.setVersionInfo(1);
+        reply.setSubSwitch(1);
+        reply.setOemCode(5);
+        reply.setPorts(new PortDescriptor[] {
+                new PortDescriptor(),
+                new PortDescriptor(),
+                new PortDescriptor(),
+                new PortDescriptor()
+        });
         reply.setShortName("ArtNet4J Node");
         reply.setLongName("ArtNet4J Node with long description");
         reply.translateData();
+        */
 
-        broadcastPacket(reply);
+        if(defaultReplyPacket != null)
+            broadcastPacket(defaultReplyPacket);
     }
 
     public void setBroadcastAddress(String address) {
@@ -196,5 +207,13 @@ public class ArtNetServer extends ArtNetNode implements Runnable {
         } catch (IOException e) {
             logger.warning(e.getMessage());
         }
+    }
+
+    public ArtPollReplyPacket getDefaultReplyPacket() {
+        return defaultReplyPacket;
+    }
+
+    public void setDefaultReplyPacket(ArtPollReplyPacket defaultReplyPacket) {
+        this.defaultReplyPacket = defaultReplyPacket;
     }
 }
