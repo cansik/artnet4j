@@ -112,7 +112,9 @@ public class ArtNetServer extends ArtNetNode implements Runnable {
                 l.artNetServerStopped(this);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            // if is not running it is in shutdown mode
+            if(isRunning)
+                e.printStackTrace();
         }
     }
 
@@ -187,6 +189,9 @@ public class ArtNetServer extends ArtNetNode implements Runnable {
 
     public void stop() {
         isRunning = false;
+
+        // kill socket and release datagram
+        socket.close();
     }
 
     /**

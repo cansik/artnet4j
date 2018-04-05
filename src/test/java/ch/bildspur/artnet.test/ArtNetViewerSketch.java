@@ -77,6 +77,11 @@ public class ArtNetViewerSketch extends PApplet {
         artnet.stop();
     }
 
+    @Override
+    public void keyPressed()
+    {
+        artnet.stop();
+    }
 
     int toRGB(byte red, byte green, byte blue)
     {
