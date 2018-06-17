@@ -66,7 +66,7 @@ public class ArtNetViewerSketch extends PApplet {
 
                // draw text
                fill(255);
-               int value = data[r * rows + c] & 0xFF;
+               int value = data[r * columns + c] & 0xFF;
                text(value, pos.x + (boxWidth / 2f), pos.y + (boxHeight / 2f));
            }
        }
