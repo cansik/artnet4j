@@ -39,7 +39,7 @@ artnet.broadcastDmx(0, 0, dmxData);
 ```
 
 ### Read Dmx Data
-Reading data is simple as creating a new client, and read the bytes from the buffer. Please be aware that you have to mask the bytes with `0xFF` (because they are signed).
+To read data you have to create a new client and read the bytes from the buffer. Please be aware that you have to mask the bytes with `0xFF` (because they are signed).
 
 ```java
 ArtNetClient artnet = new ArtNetClient();
