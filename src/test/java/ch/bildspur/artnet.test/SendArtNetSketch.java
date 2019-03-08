@@ -1,5 +1,6 @@
 package ch.bildspur.artnet.test;
 
+import ch.bildspur.artnet.ArtNetBuffer;
 import ch.bildspur.artnet.ArtNetClient;
 import ch.bildspur.artnet.ArtNetNode;
 import processing.core.PApplet;
@@ -16,7 +17,7 @@ public class SendArtNetSketch extends PApplet {
         runSketch();
     }
 
-    ArtNetClient artnet = new ArtNetClient(null);
+    ArtNetClient artnet = new ArtNetClient();
     ArtNetNode localhostNode = new ArtNetNode("127.0.0.1");
     byte[] dmxData = new byte[512];
 

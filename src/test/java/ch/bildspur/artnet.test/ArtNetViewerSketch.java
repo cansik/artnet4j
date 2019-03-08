@@ -1,5 +1,6 @@
 package ch.bildspur.artnet.test;
 
+import ch.bildspur.artnet.ArtNetBuffer;
 import ch.bildspur.artnet.ArtNetClient;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -16,7 +17,7 @@ public class ArtNetViewerSketch extends PApplet {
         runSketch();
     }
 
-    ArtNetClient artnet = new ArtNetClient();
+    ArtNetClient artnet = new ArtNetClient(new ArtNetBuffer(), 8000, 8000);
 
     int subnet = 0;
     int universe = 0;

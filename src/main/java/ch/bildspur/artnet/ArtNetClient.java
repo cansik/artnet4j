@@ -30,9 +30,19 @@ public class ArtNetClient {
      * @param inputBuffer Input buffer implementation. If null, no data is received.
      */
     public ArtNetClient(ArtNetBuffer inputBuffer) {
+        this(inputBuffer, ArtNetServer.DEFAULT_PORT, ArtNetServer.DEFAULT_PORT);
+    }
+
+    /**
+     * Creates a new ArtNetClient.
+     * @param inputBuffer Input buffer implementation. If null, no data is received.
+     * @param serverPort UDP server port where the data is read from.
+     * @param clientPort UDP client port where the data is sent to.
+     */
+    public ArtNetClient(ArtNetBuffer inputBuffer, int serverPort, int clientPort) {
         // init input buffer
         this.inputBuffer = inputBuffer;
-        server = new ArtNetServer();
+        server = new ArtNetServer(serverPort, clientPort);
     }
 
     /**
