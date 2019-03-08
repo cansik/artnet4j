@@ -11,7 +11,7 @@ void setup()
   textAlign(CENTER, CENTER);
   textSize(20);
 
-  // create artnet client without buffer (no receving needed)
+  // create artnet client with specficis ports (server / client)
   artnet = new ArtNetClient(new ArtNetBuffer(), 8000, 8000);
   artnet.start();
 }
