@@ -9,16 +9,17 @@ Art-Net DMX over IP library for Java and Processing. This library adds a lot of 
 * Added ability to receive `OpDmx` packages
 * Send and receive via UDP broadcast.
 * Support for [Art-Ext](https://github.com/mattbeghin/Art-Ext-Poll) packages.
+* Port selection of the UDP services
 
 ## Examples
 The library adds a new class called `ArtNetClient`, which contains easy access to the underlaying Art-Net implementation.
 
 ### Send Dmx Data
-To send dmx data you have to create a new client. It is possible to skip the buffer creation, because receiving is not needed here.
+To send dmx data you have to create a new client. It is possible to skip the buffer creation by passing `null` to the constructor.
 
 ```java
 byte[] dmxData = new byte[512];
-ArtNetClient artnet = new ArtNetClient(null);
+ArtNetClient artnet = new ArtNetClient();
 artnet.start();
 
 // set data
@@ -51,6 +52,15 @@ artnet.start.stop();
 ```
 
 *Based on [ReceiveDmxData](examples/ReceiveDmxData/ReceiveDmxData.pde)*
+
+### Select Port
+While creating the `ArtNetClient`, it is possible to select the specific ports for the **server** (incoming) and the **client** (outgoing).
+
+```java
+ArtNetClient artnet = new ArtNetClient(new ArtNetBuffer(), 8000, 8000);
+```
+
+*Based on [SendOnSpecificPort](examples/SendOnSpecificPort/SendOnSpecificPort.pde)*
 
 ### Bind Custom Network Interface
 It is also possible to set a custom network interface. Here you see how to bind a custom network interface `en5` to the ArtNet server:
