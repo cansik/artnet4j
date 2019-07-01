@@ -72,6 +72,23 @@ InetAddress address = ni.getInetAddresses().nextElement();
 artnet.start(address);
 ```
 
+### Receive Packet Events
+Sometimes it is necessary to receive events when a new package was received. For this prupose you can get the underlaying **ArtNetServer** and add a new listener to it.
+
+```java
+artnet = new ArtNetClient();
+
+// add packet listener to server
+artnet.getArtNetServer().addListener(
+ new ArtNetServerEventAdapter() {
+  @Override public void artNetPacketReceived(ArtNetPacket packet) {
+   println("new packet received!");
+  }
+});
+
+artnet.start();
+```
+
 ## About
 The library is based on then [artnet4j](https://code.google.com/archive/p/artnet4j/) project.
 
