@@ -1,7 +1,12 @@
-group 'ch.bildspur.artnet4j'
-version '1.0-SNAPSHOT'
+plugins {
+	id 'java'
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+}
 
-apply plugin: 'java'
+group 'ch.bildspur.artnet4j'
+version '0.5.1'
 
 sourceCompatibility = 1.8
 
@@ -22,6 +27,16 @@ configurations {
     jar.archiveName = 'artnet4j.jar'
 }
 
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    archiveClassifier = 'sources'
+}
+
+task javadocJar(type: Jar) {
+    from javadoc
+    archiveClassifier = 'javadoc'
+}
+
 javadoc {
     source = sourceSets.main.allJava
     classpath = configurations.compile
@@ -31,4 +46,53 @@ task fatJar(type: Jar) {
     baseName = project.name + '-all'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'artnet4j'
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = 'ArtNet for Java'
+                description = 'Framework for sending and receiving DMX data over the ArtNet protocol.'
+                url = 'https://github.com/cansik/artnet4j'
+                licenses {
+                    license {
+                        name = 'GNU General Public License v3.0'
+                        url = 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'flobroox'
+                        name = 'Florian Broox'
+                        email = 'dev@broox.ch'
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            // change URLs to point to your repos, e.g. http://my.org/repo
+            def releasesRepoUrl = "$buildDir/repos/releases"
+            def snapshotsRepoUrl = "$buildDir/repos/snapshots"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
 }
