@@ -25,9 +25,9 @@ if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ];then
     gradlew.bat javadoc
 else
     echo running gradle commands on unix
-    gradle build
-    gradle jar
-    gradle javadoc
+    ./gradlew build
+    ./gradlew jar
+    ./gradlew javadoc
 fi
 
 echo "copy files..."

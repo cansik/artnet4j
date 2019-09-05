@@ -12,14 +12,14 @@ addons:
 
 # command to build
 install:
-  - gradle assemble
-  - gradle build
-  - gradle jar
-  - gradle javadoc
+  - ./gradlew assemble
+  - ./gradlew build
+  - ./gradlew jar
+  - ./gradlew javadoc
   - './release.sh nightly'
 
 # command to run tests
 script:
-  - gradle check
+  - ./gradlew check
 
 after_success:
