@@ -10,6 +10,11 @@ version '0.5.1'
 
 sourceCompatibility = 1.8
 
+wrapper {
+  gradleVersion = '5.2'
+  distributionUrl = 'https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip'
+}
+
 repositories {
     mavenCentral()
 }
@@ -29,12 +34,12 @@ configurations {
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
-    archiveClassifier = 'sources'
+    archiveClassifier.set('sources')
 }
 
 task javadocJar(type: Jar) {
     from javadoc
-    archiveClassifier = 'javadoc'
+    archiveClassifier.set('javadoc')
 }
 
 javadoc {
@@ -75,7 +80,7 @@ publishing {
                 }
                 developers {
                     developer {
-                        id = 'flobroox'
+                        id = 'broox'
                         name = 'Florian Broox'
                         email = 'dev@broox.ch'
                     }
