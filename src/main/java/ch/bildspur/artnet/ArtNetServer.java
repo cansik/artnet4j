@@ -168,6 +168,7 @@ public class ArtNetServer extends ArtNetNode implements Runnable {
         if (socket == null) {
             socket = new DatagramSocket(null);
             socket.setReuseAddress(true);
+            socket.setBroadcast(true);
 
             if (networkAddress == null)
                 networkAddress = socket.getLocalAddress();
