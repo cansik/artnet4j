@@ -54,7 +54,7 @@ javadoc {
 }
 
 task fatJar(type: Jar) {
-    baseName = project.name + '-all'
+    archiveName = "artnet4j.jar"
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }

@@ -21,12 +21,12 @@ echo compiling...
 if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ];then
     echo running gradle commands on windows
     gradlew.bat build
-    gradlew.bat jar
+    gradlew.bat fatJar
     gradlew.bat javadoc
 else
     echo running gradle commands on unix
     ./gradlew build
-    ./gradlew jar
+    ./gradlew fatJar
     ./gradlew javadoc
 fi
 
