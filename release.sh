@@ -9,7 +9,9 @@ fi
 
 # parameter
 VERSION=$1
-NAME="artnet4j"
+NAME="artnet4j-$VERSION"
+
+echo "prepare release for $NAME..."
 
 echo $PWD
 

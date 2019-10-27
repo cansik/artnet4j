@@ -1,18 +1,16 @@
 plugins {
-	id 'java'
     id 'java-library'
     id 'maven-publish'
-    id 'signing'
 }
 
-group 'ch.bildspur.artnet4j'
-version '0.5.1'
+group 'ch.bildspur'
+version '0.6.1'
 
 sourceCompatibility = 1.8
 
 wrapper {
-  gradleVersion = '5.2'
-  distributionUrl = 'https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip'
+    gradleVersion = '5.6.3'
+    distributionUrl = 'https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip'
 }
 
 repositories {
@@ -21,7 +19,6 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-
 
     // xml -> not available in java 11
     compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
@@ -35,26 +32,21 @@ dependencies {
 }
 
 configurations {
-    jar.archiveName = 'artnet4j.jar'
+    jar.archiveName = "artnet4j-${version}.jar"
 }
 
 task sourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
     from sourceSets.main.allJava
-    archiveClassifier.set('sources')
 }
 
 task javadocJar(type: Jar) {
-    from javadoc
-    archiveClassifier.set('javadoc')
-}
-
-javadoc {
-    source = sourceSets.main.allJava
-    classpath = configurations.compile
+    archiveClassifier = 'javadoc'
+    from javadoc.destinationDir
 }
 
 task fatJar(type: Jar) {
-    archiveName = "artnet4j.jar"
+    archiveName = "artnet4j-${version}.jar"
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }
@@ -70,10 +62,18 @@ publishing {
             }
         }
     }
-    publications {
-        gpr(MavenPublication) {
-            //from(components.java)
-            artifact fatJar
+    afterEvaluate {
+        publications {
+            gpr(MavenPublication) {
+                from(components.java)
+                artifact sourcesJar
+                artifact javadocJar
+                pom {
+                    name = "ArtNet for Java and Processing"
+                    description = "Art-Net DMX over IP library for Java and Processing."
+                    url = "https://github.com/cansik/artnet4j"
+                }
+            }
         }
     }
 }
