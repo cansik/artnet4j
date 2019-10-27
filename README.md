@@ -10,6 +10,7 @@ Art-Net DMX over IP library for Java and Processing. This library adds a lot of 
 * Send and receive via UDP broadcast.
 * Support for [Art-Ext](https://github.com/mattbeghin/Art-Ext-Poll) packages.
 * Port selection of the UDP services
+* Supports java version `8` and `11` (oracle and openjdk)
 
 ## Examples
 The library adds a new class called `ArtNetClient`, which contains easy access to the underlaying Art-Net implementation.
