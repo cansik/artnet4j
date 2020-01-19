@@ -24,6 +24,7 @@ public enum PacketType {
     ART_POLL(0x2000, ArtPollPacket.class),
     ART_POLL_REPLY(0x2100, ArtPollReplyPacket.class),
     ART_OUTPUT(0x5000, ArtDmxPacket.class),
+    ART_TIMECODE(0x9700, ArtTimePacket.class),
     ART_ADDRESS(0x6000, null),
     ART_INPUT(0x7000, null),
     ART_TOD_REQUEST(0x8000, null),
