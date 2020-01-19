@@ -112,7 +112,7 @@ public class ArtTimePacket extends ArtNetPacket {
      * 
      * @param frames the encoded time data
      * @param frameType the type of the timecode
-     * @return
+     * @return the decoded time values
      */
     public int[] decode(long frames, int frameType) {
         int framerate = 30;
@@ -219,7 +219,7 @@ public class ArtTimePacket extends ArtNetPacket {
     }
 
     /**
-     * <table style="undefined;table-layout: fixed; width: 486px"><colgroup><col style="width: 120px"><col style="width: 107px"><col style="width: 101px"><col style="width: 158px"></colgroup><tr><th>Type</th><th> Type value</th><th>Frame rate</th><th>Frames in second</th></tr><tr><td>Film</td><td>0</td><td>24</td><td>0-23</td></tr><tr><td>EBU</td><td>1</td><td>25</td><td>0-24</td></tr><tr><td>DF</td><td>2</td><td>29.97</td><td>0-29</td></tr><tr><td>SMTPE</td><td>3</td><td>30</td><td>0-30</td></tr></table>
+     * <table><caption>Formats</caption><tr><th>Type</th><th> Type value</th><th>Frame rate</th><th>Frames in second</th></tr><tr><td>Film</td><td>0</td><td>24</td><td>0-23</td></tr><tr><td>EBU</td><td>1</td><td>25</td><td>0-24</td></tr><tr><td>DF</td><td>2</td><td>29.97</td><td>0-29</td></tr><tr><td>SMTPE</td><td>3</td><td>30</td><td>0-30</td></tr></table>
      * @return the frame type
      */
     public int getFrameType() {
@@ -227,7 +227,7 @@ public class ArtTimePacket extends ArtNetPacket {
     }
 
     /**
-     * <table style="undefined;table-layout: fixed; width: 486px"><colgroup><col style="width: 120px"><col style="width: 107px"><col style="width: 101px"><col style="width: 158px"></colgroup><tr><th>Type</th><th> Type value</th><th>Frame rate</th><th>Frames in second</th></tr><tr><td>Film</td><td>0</td><td>24</td><td>0-23</td></tr><tr><td>EBU</td><td>1</td><td>25</td><td>0-24</td></tr><tr><td>DF</td><td>2</td><td>29.97</td><td>0-29</td></tr><tr><td>SMTPE</td><td>3</td><td>30</td><td>0-30</td></tr></table>
+     * <table><caption>Formats</caption><tr><th>Type</th><th> Type value</th><th>Frame rate</th><th>Frames in second</th></tr><tr><td>Film</td><td>0</td><td>24</td><td>0-23</td></tr><tr><td>EBU</td><td>1</td><td>25</td><td>0-24</td></tr><tr><td>DF</td><td>2</td><td>29.97</td><td>0-29</td></tr><tr><td>SMTPE</td><td>3</td><td>30</td><td>0-30</td></tr></table>
      * @param type the frame type
      */
     public void setFrameType(int type) {
