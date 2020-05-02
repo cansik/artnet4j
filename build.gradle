@@ -1,16 +1,17 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
+    id 'signing'
 }
 
 group 'ch.bildspur'
-version '0.6.1'
+version '0.6.2'
 
 sourceCompatibility = 1.8
 
 wrapper {
-    gradleVersion = '5.6.3'
-    distributionUrl = 'https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip'
+    gradleVersion = '6.3'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-bin.zip"
 }
 
 repositories {
@@ -51,6 +52,10 @@ task fatJar(type: Jar) {
     with jar
 }
 
+signing {
+    sign publishing.publications
+}
+
 publishing {
     repositories {
         maven {
@@ -59,6 +64,15 @@ publishing {
             credentials {
                 username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER")
                 password = project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
+            }
+        }
+
+        maven {
+            name = "Maven"
+            url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
+            credentials {
+                username = project.findProperty("nexusUsername")
+                password = project.findProperty("nexusPassword")
             }
         }
     }
@@ -72,6 +86,23 @@ publishing {
                     name = "ArtNet for Java and Processing"
                     description = "Art-Net DMX over IP library for Java and Processing."
                     url = "https://github.com/cansik/artnet4j"
+                    licenses {
+                        license {
+                            name = 'GNU General Public License v3.0'
+                            url = 'https://www.gnu.org/licenses/gpl-3.0.txt'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'cansik'
+                            name = 'bildspur'
+                            email = 'hello@bildspur.ch'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git@github.com:cansik/artnet4j.git'
+                        url = 'https://github.com/cansik/artnet4j'
+                    }
                 }
             }
         }

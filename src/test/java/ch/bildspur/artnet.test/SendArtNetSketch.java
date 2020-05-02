@@ -1,6 +1,5 @@
 package ch.bildspur.artnet.test;
 
-import ch.bildspur.artnet.ArtNetBuffer;
 import ch.bildspur.artnet.ArtNetClient;
 import ch.bildspur.artnet.ArtNetNode;
 import processing.core.PApplet;
