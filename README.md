@@ -15,6 +15,29 @@ Art-Net DMX over IP library for Java and Processing. This library adds a lot of 
 
 ## Installation
 
+I recommend to install it from maven central. Otherwise it is also possible to use [github packages](packages), [jitpack.io](https://jitpack.io/#cansik/artnet4j) or just the [binary download](releases).
+
+### Maven
+
+```xml
+<dependency>
+  <groupId>ch.bildspur</groupId>
+  <artifactId>artnet4j</artifactId>
+  <version>0.6.2</version>
+</dependency>
+```
+
+### Gradle
+
+```groovy
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'ch.bildspur:artnet4j:0.6.2'
+}
+```
 
 ## Examples
 The library adds a new class called `ArtNetClient`, which contains easy access to the underlaying Art-Net implementation.
