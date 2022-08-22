@@ -53,7 +53,7 @@ artnet.start();
 // set data
 dmxData[0] = 128;
 
-// send data to localhost
+// send data to localhost on subnet 0 and universe 0
 artnet.unicastDmx("127.0.0.1", 0, 0, dmxData);
 
 artnet.stop();
