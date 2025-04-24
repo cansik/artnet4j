@@ -49,8 +49,7 @@ public class ArtNetClient {
      * Start client with default arguments (listen on broadcast).
      */
     public void start() {
-        // use default network interface
-        this.start((InetAddress)null);
+        this.start(null, true); // default to static binding (receiver mode)
     }
 
     /**
@@ -60,7 +59,7 @@ public class ArtNetClient {
     public void start(String networkInterfaceAddress)
     {
         try {
-            this.start(InetAddress.getByName(networkInterfaceAddress));
+            this.start(InetAddress.getByName(networkInterfaceAddress), inputBuffer != null);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -71,6 +70,15 @@ public class ArtNetClient {
      * @param networkInterfaceAddress Network interface address to listen to.
      */
     public void start(InetAddress networkInterfaceAddress) {
+        this.start(networkInterfaceAddress, inputBuffer != null);
+    }
+
+    /**
+     * Start client with specific network interface address and receiver mode.
+     * @param networkInterfaceAddress Network interface address to listen to.
+     * @param isReceiver If true, the client will bind to the specified port to receive data.
+     */
+    public void start(InetAddress networkInterfaceAddress, boolean isReceiver) {
         if (isRunning)
             return;
 
@@ -87,12 +95,20 @@ public class ArtNetClient {
                         }
                     });
 
-            server.start(networkInterfaceAddress);
+            server.start(networkInterfaceAddress, isReceiver);
 
             isRunning = true;
         } catch (SocketException | ArtNetException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Start client with receiver mode.
+     * @param isReceiver If true, the client will bind to the specified port to receive data.
+     */
+    public void start(boolean isReceiver) {
+        this.start((InetAddress) null, isReceiver);
     }
 
     /**
